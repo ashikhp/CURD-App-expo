@@ -20,7 +20,7 @@ const Intro = ({ onFinish }) => {
     }
     return (
         <>
-            <StatusBar hidden />
+            {/* <StatusBar hidden /> */}
             <View style={styles.container}>
                 <Text style={styles.inputTitle}>Enter your name to continue</Text>
                 <TextInput

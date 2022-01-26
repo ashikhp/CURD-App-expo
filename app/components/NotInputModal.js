@@ -36,7 +36,7 @@ const NotInputModal = ({ visible, onClose, onsubmit }) => {
     }
     return (
         <>
-            <StatusBar hidden />
+            {/* <StatusBar hidden /> */}
             <Modal visible={visible} animationType='fade'>
                 <View style={styles.container}>
                     <TextInput

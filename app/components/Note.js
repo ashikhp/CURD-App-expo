@@ -2,12 +2,12 @@ import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-nati
 import React from 'react';
 import colors from '../misc/colors';
 
-const Note = ({ item }) => {
+const Note = ({ item, onPress }) => {
 
     const { title, desc } = item
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             <Text style={styles.title} numberOfLines={2}>{title}</Text>
             <Text numberOfLines={3}>{desc}</Text>
         </TouchableOpacity>

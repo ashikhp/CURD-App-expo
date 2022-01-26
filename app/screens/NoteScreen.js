@@ -7,7 +7,7 @@ import colors from '../misc/colors'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Note from '../components/Note'
 
-const NoteScreen = ({ user }) => {
+const NoteScreen = ({ user, navigation }) => {
 
     const [greet, setGreet] = useState("")
     const [modalVisible, SetModalVisible] = useState(false)
@@ -43,9 +43,14 @@ const NoteScreen = ({ user }) => {
     }
 
 
+    const openNote = (note) => {
+        navigation.navigate("NoteDetail", { note })
+    }
+
+
     return (
         <>
-            <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} />
+            {/* <StatusBar barStyle='dark-content' backgroundColor={colors.LIGHT} /> */}
             <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
                 <View style={styles.container}>
                     <Text style={styles.header}>{`Good ${greet} ${user.name}`}</Text>
@@ -56,7 +61,7 @@ const NoteScreen = ({ user }) => {
                         numColumns={2}
                         columnWrapperStyle={{ justifyContent: "space-between", marginBottom: 15 }}
                         keyExtractor={item => item.id.toString()}
-                        renderItem={({ item }) => <Note item={item} />}
+                        renderItem={({ item }) => <Note onPress={() => openNote(item)} item={item} />}
                     />
                     {!notes.length ? <View style={[StyleSheet.absoluteFillObject, styles.emptyHeaderContainer]}>
                         <Text style={styles.emptyHeader}>Add Notes</Text>
@@ -85,7 +90,7 @@ const NoteScreen = ({ user }) => {
 const styles = StyleSheet.create({
     header: {
         fontSize: 25,
-        fontWeight: "bold"
+        fontWeight: "bold", marginTop: 30
     },
     container: {
         paddingHorizontal: 20,
@@ -107,7 +112,8 @@ const styles = StyleSheet.create({
     addBtn: {
         position: "absolute",
         right: 15,
-        bottom: 50
+        bottom: 50,
+        zIndex: 1
     }
 })
 
