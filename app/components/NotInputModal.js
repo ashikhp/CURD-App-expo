@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, Modal, StatusBar, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native'
 import colors from '../misc/colors'
 import RoundIconBtn from './RoundIconBtn'
 
-const NotInputModal = ({ visible, onClose, onsubmit }) => {
+const NotInputModal = ({ visible, onClose, onsubmit, note, isEdit }) => {
 
     const [title, setTitle] = useState("")
     const [desc, setDesc] = useState("")
@@ -14,6 +14,16 @@ const NotInputModal = ({ visible, onClose, onsubmit }) => {
 
     }
 
+    useEffect(() => {
+
+        if (isEdit) {
+            setTitle(note.title)
+            setDesc(note.desc)
+        }
+
+    }, [isEdit]);
+
+
     const handleOnChangeText = (text, valueFor) => {
         if (valueFor === "title") setTitle(text)
         if (valueFor === "desc") setDesc(text)
@@ -22,16 +32,25 @@ const NotInputModal = ({ visible, onClose, onsubmit }) => {
 
     const handleSubmit = () => {
         if (!title.trim() && !desc.trim()) return onClose()
-        onsubmit(title, desc)
-        setTitle('')
-        setDesc('')
+        if (isEdit) {
+            onsubmit(title, desc, Date.now())
+
+        } else {
+            onsubmit(title, desc)
+            setTitle('')
+            setDesc('')
+        }
         onClose()
+
     }
 
 
     const closeModal = () => {
-        setTitle('')
-        setDesc('')
+        if (!isEdit) {
+            setTitle('')
+            setDesc('')
+        }
+
         onClose()
     }
     return (

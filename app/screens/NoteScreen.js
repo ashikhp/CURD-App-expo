@@ -6,12 +6,13 @@ import NotInputModal from '../components/NotInputModal'
 import colors from '../misc/colors'
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Note from '../components/Note'
+import { useNotes } from '../../contexts/NoteProvider'
 
 const NoteScreen = ({ user, navigation }) => {
 
     const [greet, setGreet] = useState("")
     const [modalVisible, SetModalVisible] = useState(false)
-    const [notes, SetNotes] = useState([]);
+    const { notes, SetNotes } = useNotes();
 
     const findGreet = () => {
         const hrs = new Date().getHours();
@@ -25,6 +26,8 @@ const NoteScreen = ({ user, navigation }) => {
         if (result !== null) SetNotes(JSON.parse(result))
 
     }
+
+
 
     useEffect(() => {
         findNotes()

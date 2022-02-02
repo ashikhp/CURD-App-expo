@@ -6,10 +6,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage"
 import NoteScreen from './app/screens/NoteScreen';
 import Intro from './app/screens/Intro';
 import NoteDetail from './app/components/NoteDetail';
+import NoteProvider from './contexts/NoteProvider';
 
 const Stack = createStackNavigator()
 
 export default function App() {
+  console.disableYellowBox = true
 
   const [user, setUser] = useState({})
 
@@ -28,14 +30,16 @@ export default function App() {
 
   if (!user.name) return <Intro onFinish={findUser} />
   return (
-    <NavigationContainer>
-      <Stack.Navigator >
-        <Stack.Screen component={renderNoteScreen} name='NoteScreen' options={{
-          headerShown: false
-        }} />
-        <Stack.Screen component={NoteDetail} name='NoteDetail' />
-      </Stack.Navigator>
-    </NavigationContainer>
+    < NavigationContainer >
+      <NoteProvider>
+        <Stack.Navigator >
+          <Stack.Screen component={renderNoteScreen} name='NoteScreen' options={{
+            headerShown: false
+          }} />
+          <Stack.Screen component={NoteDetail} name='NoteDetail' />
+        </Stack.Navigator>
+      </NoteProvider>
+    </NavigationContainer >
   )
 }
 
